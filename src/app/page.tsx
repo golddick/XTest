@@ -48,7 +48,7 @@ export default function Home() {
        </Link>
 
        <Link 
-       href="https://wa.me/08065591354" 
+       href="https://wa.me/+2348065591354" 
        target="_blank"
        >
        <Image
