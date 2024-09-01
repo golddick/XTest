@@ -1,6 +1,6 @@
 "use client";
 
-import { CreateIngressResponse } from "@/lib/controller";
+import { CreateIngressParams, CreateIngressResponse } from "@/lib/controller";
 import { ArrowRightIcon } from "@radix-ui/react-icons";
 import {
   Button,
@@ -27,27 +27,65 @@ export function IngressDialog({ children }: { children: React.ReactNode }) {
   const [enableChat, setEnableChat] = useState(true);
   const [allowParticipation, setAllowParticipation] = useState(true);
   const [ingressResponse, setIngressResponse] =
-    useState<CreateIngressResponse>();
+  useState<CreateIngressResponse | null>(null); 
+    // useState<CreateIngressResponse>();
+
+  // const onCreateIngress = async () => {
+  //   setLoading(true);
+
+  //   const res = await fetch("/api/create_ingress", {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify({
+  //       room_name: roomName,
+  //       ingress_type: type,
+  //       metadata: {
+  //         creator_identity: name,
+  //         enable_chat: enableChat,
+  //         allow_participation: allowParticipation,
+  //       },
+  //     }),
+  //   });
+
+  //   setIngressResponse(await res.json());
+  // };
+
+
+
+
 
   const onCreateIngress = async () => {
     setLoading(true);
+    try {
+      const res = await fetch("/api/create_ingress", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          room_name: roomName,
+          ingress_type: type,
+          metadata: {
+            creator_identity: name,
+            enable_chat: enableChat,
+            allow_participation: allowParticipation,
+          },
+        }),
+      });
 
-    const res = await fetch("/api/create_ingress", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        room_name: roomName,
-        ingress_type: type,
-        metadata: {
-          creator_identity: name,
-          enable_chat: enableChat,
-          allow_participation: allowParticipation,
-        },
-      }),
-    });
+      if (!res.ok) {
+        // Handle server errors
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
 
-    setIngressResponse(await res.json());
+      const data: CreateIngressResponse = await res.json();
+      setIngressResponse(data);
+    } catch (error) {
+      console.error("Failed to create ingress:", error);
+      // Handle any other errors
+    } finally {
+      setLoading(false);
+    }
   };
+
 
   return (
     <Dialog.Root>

@@ -7,8 +7,8 @@ import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Livestream with LiveKit",
-  description: "A sample full-stack application built with LiveKit",
+  title: "XONNET V0.1",
+  description: "A sample KONNET full-stack application built with LiveKit",
 };
 
 export default function RootLayout({
@@ -21,7 +21,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Theme
           appearance="dark"
-          accentColor="purple"
+          accentColor="gold"
           grayColor="mauve"
           radius="none"
         >

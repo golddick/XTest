@@ -27,7 +27,7 @@ export function BroadcastDialog({ children }: { children: React.ReactNode }) {
     setLoading(true);
     const res = await fetch("/api/create_stream", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json" }, 
       body: JSON.stringify({
         room_name: roomName,
         metadata: {
